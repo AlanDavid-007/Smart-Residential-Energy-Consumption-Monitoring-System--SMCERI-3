@@ -35,11 +35,12 @@ window.jQuery = $;
     };
 
     // Sidebar toggle
-    if (select('.toggle-sidebar-btn').length) {
-        on('click', '.toggle-sidebar-btn', function () {
-            $('body').toggleClass('toggle-sidebar'); // Toggle the sidebar class
+    if ($('.toggle-sidebar-btn').length) {
+        $('.toggle-sidebar-btn').on('click', function () {
+            $('body').toggleClass('toggle-sidebar');
         });
     }
+
 
     // Search bar toggle
     if (select('.search-bar-toggle').length) {

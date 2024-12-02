@@ -21,7 +21,6 @@
 
     img {
       max-height: 26px;
-      margin-right: 6px;
     }
 
     span {
@@ -31,12 +30,19 @@
     }
   }
 
+  .toggle-sidebar-btn {
+    font-size: 1.5rem;
+    color: $primary-color;
+    cursor: pointer;
+  }
+
   .search-bar {
     flex-grow: 1;
     margin-left: 20px;
 
     .search-form {
       display: flex;
+      align-items: center;
       border: 1px solid #ddd;
       border-radius: 4px;
 
@@ -44,6 +50,11 @@
         border: none;
         padding: 8px;
         flex-grow: 1;
+        font-size: $font-size-base;
+
+        &:focus {
+          outline: none;
+        }
       }
 
       button {
@@ -51,6 +62,143 @@
         border: none;
         padding: 8px;
         cursor: pointer;
+
+        i {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+
+    .nav-item {
+      margin-left: 20px;
+
+      .nav-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        i {
+          font-size: 1.2rem;
+          color: $primary-color;
+        }
+
+        .badge {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background: $primary-color;
+          color: #fff;
+          font-size: 0.7rem;
+          padding: 3px 5px;
+          border-radius: 50%;
+        }
+      }
+
+      .dropdown-menu {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        border: none;
+
+        .dropdown-header {
+          padding: 10px 15px;
+          font-weight: bold;
+          color: $primary-color;
+        }
+
+        .dropdown-item {
+          padding: 10px 15px;
+          color: #444;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #f6f9ff;
+          }
+
+          i {
+            font-size: 1rem;
+            margin-right: 10px;
+            color: $primary-color;
+          }
+        }
+
+        .dropdown-divider {
+          margin: 0;
+          border-color: #ddd;
+        }
+
+        .dropdown-footer {
+          text-align: center;
+          padding: 10px 15px;
+
+          a {
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .nav-profile {
+      display: flex;
+      align-items: center;
+
+      img {
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+      }
+
+      .dropdown-toggle {
+        margin-left: 10px;
+        font-size: $font-size-base;
+        color: $primary-color;
+
+        &:after {
+          display: none;
+        }
+      }
+
+      .profile {
+        .dropdown-header {
+          text-align: center;
+          padding: 10px 15px;
+
+          h6 {
+            margin: 0;
+            font-weight: bold;
+            color: $primary-color;
+          }
+
+          span {
+            font-size: $font-size-base;
+            color: #888;
+          }
+        }
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+
+          i {
+            font-size: 1rem;
+            margin-right: 10px;
+            color: $primary-color;
+          }
+
+          span {
+            font-size: $font-size-base;
+          }
+        }
       }
     }
   }

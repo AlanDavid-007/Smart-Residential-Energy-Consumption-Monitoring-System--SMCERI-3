@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import Help from "./pages/Help";
 import Logout from "./components/Logout"; // Or create a separate Logout page if needed
 import './styles/style.scss'; // Import global SCSS
+import './App.css';
 import './scripts/default.js'; // Import JS functionality
 
 const App = () => {
@@ -18,22 +19,21 @@ const App = () => {
     <Router>
       <div id="main-wrapper" className="app">
         <Header />
+        <Sidebar />
         <div className="main-container">
-          <Sidebar />
           <MainContent />
         </div>
         <Footer />
       </div>
 
-      {/* Define Routes for different pages */}
-      <Routes>
+      {/* <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/consumption-history" element={<ConsumptionHistory />} />
         <Route path="/device-management" element={<DeviceManagement />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/help" element={<Help />} />
         <Route path="/logout" element={<Logout />} />
-      </Routes>
+      </Routes> */}
     </Router>
   );
 };

@@ -7,5 +7,56 @@
 
 @import "header";
 @import "sidebar";
+
+/* Hidden state (slid out of view) */
+body.toggle-sidebar {
+    transform: translateX(-100%);
+    /* Slide out to the left */
+}
+
+@media (max-width: 1199px) {
+    body.toggle-sidebar {
+        transform: translateX(-100%);
+        /* Hidden by default on smaller screens */
+    }
+}
+
+@media (min-width: 1200px) {
+    body.toggle-sidebar {
+        transform: translateX(0);
+        /* Ensure visibility on larger screens */
+    }
+
+    /* Main and Footer adjustments for Sidebar toggle */
+    .main,
+    .footer {
+        transition: margin-left 0.4s ease-in-out;
+        /* Smooth margin adjustment */
+
+        @media (min-width: 1200px) {
+            margin-left: 300px;
+            /* Default offset for larger screens */
+        }
+
+        body.toggle-sidebar {
+            margin-left: 0;
+            /* Reset margin when sidebar is hidden */
+        }
+    }
+
+    /* Sidebar toggle-specific styles for larger screens */
+
+    .toggle-sidebar .main,
+    .toggle-sidebar .footer {
+        margin-left: 0;
+        /* Reset margins for hidden sidebar */
+    }
+
+    .toggle-sidebar .sidebar {
+        left: -300px;
+        /* Ensure sidebar is hidden */
+    }
+}
+
 @import "mainContent";
 @import "footer";
