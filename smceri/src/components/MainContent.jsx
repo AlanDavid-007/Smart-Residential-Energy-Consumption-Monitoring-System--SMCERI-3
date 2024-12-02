@@ -1,5 +1,14 @@
 import React from "react";
-import "./styles/MainContent.css";
+import { Routes, Route, Link } from "react-router-dom"; // Import Routes and Route components
+
+import Dashboard from "../pages/Dashboard";  // Assuming these pages exist
+import ConsumptionHistory from "../pages/ConsumptionHistory";
+import DeviceManagement from "../pages/DeviceManagement";
+import Profile from "../pages/Profile";
+import Help from "../pages/Help";
+
+import "../styles/_mainContent.scss";
+
 const MainContent = () => {
   return (
     <main id="main" className="main">
@@ -7,7 +16,7 @@ const MainContent = () => {
         <h1>Dashboard</h1>
         <nav>
           <ol className="breadcrumb">
-            <li className="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
             <li className="breadcrumb-item active">Dashboard</li>
           </ol>
         </nav>
@@ -15,7 +24,13 @@ const MainContent = () => {
 
       <section className="section dashboard">
         <div className="row">
-          {/* Colunas de conteúdo */}
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/consumption-history" element={<ConsumptionHistory />} />
+            <Route path="/device-management" element={<DeviceManagement />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/help" element={<Help />} />
+          </Routes>
         </div>
       </section>
     </main>

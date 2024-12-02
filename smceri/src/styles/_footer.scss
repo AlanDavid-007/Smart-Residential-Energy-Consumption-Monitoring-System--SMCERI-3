@@ -1,0 +1,21 @@
+// _footer.scss
+
+@import "variables"; // Importing the variables
+.footer {
+  padding: 20px 0;
+  font-size: 14px;
+  transition: all 0.3s;
+  border-top: 1px solid #cddfff;
+  background: #343a40;
+  color: #fff;
+  
+  .copyright {
+    text-align: center;
+  }
+  
+  .credits {
+    padding-top: 5px;
+    text-align: center;
+    font-size: 13px;
+  }
+}

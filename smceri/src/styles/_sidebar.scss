@@ -1,0 +1,129 @@
+// _sidebar.scss
+
+@import "variables"; // Importing the variables
+
+/* Sidebar */
+.sidebar {
+  background: $light-bg-color;
+  color: #fff;
+  width: 240px;
+  padding: 20px;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 996;
+  transition: all 0.3s;
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  
+  /* Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #aab7cf transparent;
+
+  /* Sidebar Nav */
+  .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    .nav-item {
+      margin-bottom: 10px;
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        color: $dark-bg-color;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        transition: all 0.3s;
+        
+        &:hover {
+          background: #4154f1;
+          color: $primary-color;
+        }
+
+        i {
+          margin-right: 10px;
+        }
+        
+        &.collapsed {
+          color: #4154f1;
+          background: $light-bg-color;
+
+          i {
+            color: #899bbd;
+          }
+        }
+      }
+    }
+  }
+
+  /* Scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #aab7cf;
+  }
+
+  /* Media Queries for Sidebar Toggle (Mobile responsiveness) */
+  @media (max-width: 1199px) {
+    .sidebar {
+      left: -300px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #main,
+    #footer {
+      margin-left: 300px;
+    }
+
+    .toggle-sidebar #main,
+    .toggle-sidebar #footer {
+      margin-left: 0;
+    }
+
+    .toggle-sidebar .sidebar {
+      left: -300px;
+    }
+  }
+  
+  /* Sidebar Navigation Link Hover Effects */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: #4154f1;
+    transition: 0.3;
+    background: $light-bg-color;
+    padding: 10px 15px;
+    border-radius: 4px;
+
+    &:hover {
+      color: #4154f1;
+      background: #f6f9ff;
+    }
+
+    i {
+      font-size: 16px;
+      margin-right: 10px;
+      color: #4154f1;
+    }
+  }
+
+  /* Sidebar collapse styles */
+  .nav-item .nav-link.collapsed {
+    color: #012970;
+    background: #fff;
+  }
+
+  .nav-item .nav-link.collapsed i {
+    color: #899bbd;
+  }
+}

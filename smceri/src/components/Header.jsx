@@ -1,20 +1,18 @@
 import React from "react";
-import "./styles/Header.css";
+import logo from "../images/logo.png";
+import "../styles/_header.scss";
+
 const Header = () => {
   return (
-    <header id="header" className="header fixed-top d-flex align-items-center">
-      <div className="d-flex align-items-center justify-content-between">
-        <a href="index.html" className="logo d-flex align-items-center">
-          <img src="assets/img/logo.png" alt="Logo" />
-          <span className="d-none d-lg-block">NiceAdmin</span>
-        </a>
-        <i className="bi bi-list toggle-sidebar-btn"></i>
+    <header className="header">
+      <div className="logo">
+        <img src={logo} alt="Logo" />
+        <span className="d-none d-lg-block">NiceAdmin</span>
       </div>
-
       <div className="search-bar">
-        <form className="search-form d-flex align-items-center" method="POST" action="#">
-          <input type="text" name="query" placeholder="Search" />
-          <button type="submit" title="Search">
+        <form className="search-form">
+          <input type="text" placeholder="Search" />
+          <button type="submit">
             <i className="bi bi-search"></i>
           </button>
         </form>
@@ -41,7 +39,6 @@ const Header = () => {
                   </span>
                 </a>
               </li>
-              {/* Outras notificações */}
             </ul>
           </li>
         </ul>

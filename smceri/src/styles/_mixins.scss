@@ -1,0 +1,21 @@
+// _mixins.scss
+
+// Mixin for smooth transitions
+@mixin transition($property, $duration) {
+  transition: $property $duration ease-in-out;
+}
+
+// Mixin para botões
+@mixin button($background-color, $color) {
+  background-color: $background-color;
+  color: $color;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  @include transition(all, 0.3s);
+
+  &:hover {
+    background-color: darken($background-color, 10%);
+  }
+}

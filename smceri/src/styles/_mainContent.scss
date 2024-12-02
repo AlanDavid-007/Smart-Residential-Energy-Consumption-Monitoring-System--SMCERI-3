@@ -1,0 +1,38 @@
+// _mainContent.scss
+
+@import "variables"; // Importing the variables
+
+.main {
+  margin-top: 60px;
+  margin-left: 240px;
+  padding: 20px;
+  background: #f8f9fa;
+  flex-grow: 1;
+
+  .pagetitle {
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: $font-size-xl;
+      font-weight: bold;
+      color: #012970;
+    }
+  }
+
+  .breadcrumb {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
