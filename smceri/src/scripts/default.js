@@ -1,38 +1,17 @@
 /* global bootstrap, $, jQuery */
-
-// Import necessary libraries
 import 'bootstrap';
-import {
-    DataTable
-} from 'simple-datatables';
+import ApexCharts from 'apexcharts';
+import { DataTable } from 'simple-datatables';
 import * as echarts from 'echarts';
 import Quill from 'quill';
 import tinymce from 'tinymce';
 import $ from 'jquery';
 
-// Make jQuery available globally
 window.$ = $;
 window.jQuery = $;
 
-
-(function ($) {
-    "use strict";
-
-    const onscroll = (el, listener) => {
-        $(el).on('scroll', listener); // Use jQuery to attach a scroll event
-    };
-
-    // Easy selector helper function
-    const select = (el, all = false) => {
-        el = el.trim();
-        return all ? $(el) : $(el).eq(0);
-    };
-
-    // Easy event listener function
-    const on = (type, el, listener, all = false) => {
-        const elements = select(el, all);
-        elements.on(type, listener); // Attach event to all matched elements if needed
-    };
+$(() => {
+  "use strict";
 
     // Sidebar toggle
     if ($('.toggle-sidebar-btn').length) {
@@ -41,175 +20,159 @@ window.jQuery = $;
         });
     }
 
+  // Toggle profile visibility
+  $('.toggle-profile-btn').on('click', () => {
+    const $profileElement = $('.toggle-profile');
+    $profileElement.toggleClass('d-none');
+    $profileElement.css('display', $profileElement.hasClass('d-none') ? 'none' : 'block');
+  });
 
-    // Search bar toggle
-    if (select('.search-bar-toggle').length) {
-        on('click', '.search-bar-toggle', function () {
-            $('.search-bar').toggleClass('search-bar-show'); // Toggle search bar visibility
-        });
-    }
+  // Search bar toggle
+  $('.search-bar-toggle').on('click', () => {
+    $('.search-bar').toggleClass('search-bar-show');
+  });
 
-    // Navbar links active state on scroll
-    const navbarlinks = select('#navbar .scrollto', true);
-    const navbarlinksActive = () => {
-        const position = $(window).scrollTop() + 200; // Current scroll position
-        navbarlinks.each(function () {
-            const navbarlink = $(this);
-            const section = $(navbarlink.attr('href'));
-            if (section.length && position >= section.offset().top && position <= section.offset().top + section.outerHeight()) {
-                navbarlink.addClass('active'); // Add active class if the section is in view
-            } else {
-                navbarlink.removeClass('active'); // Remove active class if not in view
-            }
-        });
-    };
-    $(window).on('load', navbarlinksActive);
-    onscroll(document, navbarlinksActive);
-
-    // Add .header-scrolled class to #header on scroll
-    if (select('#header').length) {
-        const headerScrolled = () => {
-            if ($(window).scrollTop() > 100) {
-                $('#header').addClass('header-scrolled');
-            } else {
-                $('#header').removeClass('header-scrolled');
-            }
-        };
-        $(window).on('load', headerScrolled);
-        onscroll(document, headerScrolled);
-    }
-
-    // Back to top button visibility toggle
-    const backtotop = select('.back-to-top');
-    if (backtotop.length) {
-        const toggleBacktotop = () => {
-            if ($(window).scrollTop() > 100) {
-                backtotop.addClass('active');
-            } else {
-                backtotop.removeClass('active');
-            }
-        };
-        $(window).on('load', toggleBacktotop);
-        onscroll(document, toggleBacktotop);
-    }
-
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call($('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl); // Initialize Bootstrap tooltip
+  // Navbar links active state on scroll
+  const navbarlinks = $('#navbar .scrollto');
+  const navbarlinksActive = () => {
+    const position = $(window).scrollTop() + 200;
+    navbarlinks.each(function () {
+      const section = $($(this).attr('href'));
+      if (section.length && position >= section.offset().top && position <= section.offset().top + section.outerHeight()) {
+        $(this).addClass('active');
+      } else {
+        $(this).removeClass('active');
+      }
     });
+  };
+  $(window).on('scroll load', navbarlinksActive);
 
-    // Initialize Quill editors
-    if (select('.quill-editor-default').length) {
-        new Quill('.quill-editor-default', {
-            theme: 'snow'
-        });
-    }
+  // Header scroll class toggle
+  const headerScrolled = () => {
+    $('#header').toggleClass('header-scrolled', $(window).scrollTop() > 100);
+  };
+  $(window).on('scroll load', headerScrolled);
 
-    if (select('.quill-editor-bubble').length) {
-        new Quill('.quill-editor-bubble', {
-            theme: 'bubble'
-        });
-    }
+  // Back to top button
+  const toggleBacktotop = () => {
+    $('.back-to-top').toggleClass('active', $(window).scrollTop() > 100);
+  };
+  $(window).on('scroll load', toggleBacktotop);
 
-    if (select('.quill-editor-full').length) {
-        new Quill(".quill-editor-full", {
-            modules: {
-                toolbar: [
-                    [{
-                        font: []
-                    }, {
-                        size: []
-                    }],
-                    ["bold", "italic", "underline", "strike"],
-                    [{
-                        color: []
-                    }, {
-                        background: []
-                    }],
-                    [{
-                        script: "super"
-                    }, {
-                        script: "sub"
-                    }],
-                    [{
-                        list: "ordered"
-                    }, {
-                        list: "bullet"
-                    }, {
-                        indent: "-1"
-                    }, {
-                        indent: "+1"
-                    }],
-                    ["direction", {
-                        align: []
-                    }],
-                    ["link", "image", "video"],
-                    ["clean"]
-                ]
-            },
-            theme: "snow"
-        });
-    }
+  // Bootstrap tooltips initialization
+  $('[data-bs-toggle="tooltip"]').each(function () {
+    new bootstrap.Tooltip(this);
+  });
 
-    // Initialize TinyMCE Editor
-    const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    tinymce.init({
-        selector: 'textarea.tinymce-editor',
-        plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
-        menubar: 'file edit view insert format tools table help',
-        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent | forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
-        autosave_ask_before_unload: true,
-        height: 600,
-        skin: useDarkMode ? 'oxide-dark' : 'oxide',
-        content_css: useDarkMode ? 'dark' : 'default',
-        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+  // Quill editor initialization
+  if ($('.quill-editor-default').length) new Quill('.quill-editor-default', { theme: 'snow' });
+  if ($('.quill-editor-bubble').length) new Quill('.quill-editor-bubble', { theme: 'bubble' });
+  if ($('.quill-editor-full').length) {
+    new Quill('.quill-editor-full', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ font: [] }, { size: [] }],
+          ["bold", "italic", "underline", "strike"],
+          [{ color: [] }, { background: [] }],
+          [{ script: "super" }, { script: "sub" }],
+          [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+          ["direction", { align: [] }],
+          ["link", "image", "video"],
+          ["clean"]
+        ]
+      }
     });
+  }
 
-    // Initialize Bootstrap validation check
-    const needsValidation = $('.needs-validation');
-    needsValidation.each(function () {
-        $(this).on('submit', function (event) {
-            if (!this.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            $(this).addClass('was-validated');
-        });
-    });
+  // TinyMCE initialization
+  const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  tinymce.init({
+    selector: 'textarea.tinymce-editor',
+    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+    menubar: 'file edit view insert format tools table help',
+    toolbar: "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | outdent indent | code fullscreen preview | save print | pagebreak anchor codesample",
+    autosave_ask_before_unload: true,
+    height: 600,
+    skin: useDarkMode ? 'oxide-dark' : 'oxide',
+    content_css: useDarkMode ? 'dark' : 'default',
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+  });
 
-    // Initialize DataTables
-    const datatables = $('.datatable');
-    datatables.each(function () {
-        new DataTable(this, {
-            perPageSelect: [5, 10, 15, ["All", -1]],
-            columns: [{
-                    select: 2,
-                    sortSequence: ["desc", "asc"]
-                },
-                {
-                    select: 3,
-                    sortSequence: ["desc"]
-                },
-                {
-                    select: 4,
-                    cellClass: "green",
-                    headerClass: "red"
-                }
-            ]
-        });
-    });
-
-    // Auto-resize Echart charts
-    const mainContainer = $('#main');
-    if (mainContainer.length) {
-        setTimeout(() => {
-            new ResizeObserver(function () {
-                $('.echart').each(function () {
-                    echarts.getInstanceByDom(this).resize();
-                });
-            }).observe(mainContainer[0]);
-        }, 200);
+  // Bootstrap validation
+  $('.needs-validation').on('submit', function (event) {
+    if (!this.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
     }
+    $(this).addClass('was-validated');
+  });
 
-})(jQuery);
+  // DataTables initialization
+  $('.datatable').each(function () {
+    new DataTable(this, {
+      perPageSelect: [5, 10, 15, ["All", -1]],
+    });
+  });
+
+  // Echarts resize handler
+  const mainContainer = $('#main');
+  if (mainContainer.length) {
+    setTimeout(() => {
+      new ResizeObserver(() => {
+        $('.echart').each(function () {
+          echarts.getInstanceByDom(this)?.resize();
+        });
+      }).observe(mainContainer[0]);
+    }, 200);
+  }
+
+    new ApexCharts(document.querySelector("#reportsChart"), {
+      series: [{
+        name: 'Sales',
+        data: [31, 40, 28, 51, 42, 82, 56],
+      }, {
+        name: 'Revenue',
+        data: [11, 32, 45, 32, 34, 52, 41]
+      }, {
+        name: 'Customers',
+        data: [15, 11, 32, 18, 9, 24, 11]
+      }],
+      chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+          show: false
+        },
+      },
+      markers: {
+        size: 4
+      },
+      colors: ['#4154f1', '#2eca6a', '#ff771d'],
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.3,
+          opacityTo: 0.4,
+          stops: [0, 90, 100]
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy HH:mm'
+        },
+      }
+    }).render();
+});

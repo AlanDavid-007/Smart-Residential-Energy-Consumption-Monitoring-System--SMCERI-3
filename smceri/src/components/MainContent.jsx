@@ -12,18 +12,6 @@ import "../styles/_mainContent.scss";
 const MainContent = () => {
   return (
     <main id="main" className="main">
-      <div className="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-            <li className="breadcrumb-item active">Dashboard</li>
-          </ol>
-        </nav>
-      </div>
-
-      <section className="section dashboard">
-        <div className="row">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/consumption-history" element={<ConsumptionHistory />} />
@@ -31,8 +19,6 @@ const MainContent = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/help" element={<Help />} />
           </Routes>
-        </div>
-      </section>
     </main>
   );
 };

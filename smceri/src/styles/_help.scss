@@ -1,0 +1,16 @@
+// _help.scss
+
+@import "variables"; // Importing the variables
+
+.faq {
+	.basic {
+		h6 {
+			font-size: 18px;
+			font-weight: 600;
+			color: $help_color_1;
+		}
+		p {
+			color: $help_color_2;
+		}
+	}
+}

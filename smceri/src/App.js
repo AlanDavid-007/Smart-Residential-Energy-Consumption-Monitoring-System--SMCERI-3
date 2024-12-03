@@ -25,15 +25,6 @@ const App = () => {
         </div>
         <Footer />
       </div>
-
-      {/* <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/consumption-history" element={<ConsumptionHistory />} />
-        <Route path="/device-management" element={<DeviceManagement />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/logout" element={<Logout />} />
-      </Routes> */}
     </Router>
   );
 };

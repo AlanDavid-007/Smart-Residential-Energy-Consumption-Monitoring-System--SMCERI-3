@@ -202,4 +202,33 @@
       }
     }
   }
+
+  .dropdown-menu.profile {
+  min-width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: $light-bg-color;
+  color: #fff;
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: lighten($dark-bg-color, 70%);
+    }
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+
+  .dropdown-header {
+    text-align: center;
+    font-size: $font-size-base;
+  }
+}
+
 }
