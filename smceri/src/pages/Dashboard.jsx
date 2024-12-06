@@ -2,10 +2,11 @@
 import React from "react";
 import "../styles/_dashBoard.scss";
 import { Routes, Route, Link } from "react-router-dom"; // Import Routes and Route components
+import '../scripts/default.js'; // Import JS functionality
 
 const Dashboard = () => {
   return (
-    <section className="section dashboard">
+    <section className="section dashboard mt-3">
       <div className="pagetitle">
         <h1>Dashboard</h1>
         <nav>

@@ -1,7 +1,9 @@
 /* global bootstrap, $, jQuery */
 import 'bootstrap';
 import ApexCharts from 'apexcharts';
-import { DataTable } from 'simple-datatables';
+import {
+  DataTable
+} from 'simple-datatables';
 import * as echarts from 'echarts';
 import Quill from 'quill';
 import tinymce from 'tinymce';
@@ -13,12 +15,12 @@ window.jQuery = $;
 $(() => {
   "use strict";
 
-    // Sidebar toggle
-    if ($('.toggle-sidebar-btn').length) {
-        $('.toggle-sidebar-btn').on('click', function () {
-            $('body').toggleClass('toggle-sidebar');
-        });
-    }
+  // Sidebar toggle
+  if ($('.toggle-sidebar-btn').length) {
+    $('.toggle-sidebar-btn').on('click', function () {
+      $('body').toggleClass('toggle-sidebar');
+    });
+  }
 
   // Toggle profile visibility
   $('.toggle-profile-btn').on('click', () => {
@@ -65,19 +67,45 @@ $(() => {
   });
 
   // Quill editor initialization
-  if ($('.quill-editor-default').length) new Quill('.quill-editor-default', { theme: 'snow' });
-  if ($('.quill-editor-bubble').length) new Quill('.quill-editor-bubble', { theme: 'bubble' });
+  if ($('.quill-editor-default').length) new Quill('.quill-editor-default', {
+    theme: 'snow'
+  });
+  if ($('.quill-editor-bubble').length) new Quill('.quill-editor-bubble', {
+    theme: 'bubble'
+  });
   if ($('.quill-editor-full').length) {
     new Quill('.quill-editor-full', {
       theme: 'snow',
       modules: {
         toolbar: [
-          [{ font: [] }, { size: [] }],
+          [{
+            font: []
+          }, {
+            size: []
+          }],
           ["bold", "italic", "underline", "strike"],
-          [{ color: [] }, { background: [] }],
-          [{ script: "super" }, { script: "sub" }],
-          [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-          ["direction", { align: [] }],
+          [{
+            color: []
+          }, {
+            background: []
+          }],
+          [{
+            script: "super"
+          }, {
+            script: "sub"
+          }],
+          [{
+            list: "ordered"
+          }, {
+            list: "bullet"
+          }, {
+            indent: "-1"
+          }, {
+            indent: "+1"
+          }],
+          ["direction", {
+            align: []
+          }],
           ["link", "image", "video"],
           ["clean"]
         ]
@@ -115,6 +143,18 @@ $(() => {
     });
   });
 
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path);
+    window.dispatchEvent(new Event("routeChanged"));
+};
+
+// Exemplo de uso no Sidebar
+$('.sidebar-nav .nav-link').on('click', function (e) {
+    e.preventDefault();
+    const targetPath = $(this).attr('href');
+    navigateTo(targetPath);
+});
+
   // Echarts resize handler
   const mainContainer = $('#main');
   if (mainContainer.length) {
@@ -127,18 +167,37 @@ $(() => {
     }, 200);
   }
 
-    new ApexCharts(document.querySelector("#reportsChart"), {
+  // Função para inicializar o gráfico do ApexCharts
+  const initializeReportsChart = () => {
+    const chartElement = document.querySelector("#reportsChart");
+    if (!chartElement) {
+      console.warn("Chart element not found: #reportsChart");
+      return;
+    }
+
+    // Verifica e destrói o gráfico anterior, se existir
+    const existingChart = ApexCharts.getChartByID(chartElement.id);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+
+    // Cria um novo gráfico
+    new ApexCharts(chartElement, {
       series: [{
-        name: 'Sales',
-        data: [31, 40, 28, 51, 42, 82, 56],
-      }, {
-        name: 'Revenue',
-        data: [11, 32, 45, 32, 34, 52, 41]
-      }, {
-        name: 'Customers',
-        data: [15, 11, 32, 18, 9, 24, 11]
-      }],
+          name: 'Sales',
+          data: [31, 40, 28, 51, 42, 82, 56]
+        },
+        {
+          name: 'Revenue',
+          data: [11, 32, 45, 32, 34, 52, 41]
+        },
+        {
+          name: 'Customers',
+          data: [15, 11, 32, 18, 9, 24, 11]
+        }
+      ],
       chart: {
+        id: "reportsChart",
         height: 350,
         type: 'area',
         toolbar: {
@@ -167,12 +226,30 @@ $(() => {
       },
       xaxis: {
         type: 'datetime',
-        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+        categories: [
+          "2018-09-19T00:00:00.000Z",
+          "2018-09-19T01:30:00.000Z",
+          "2018-09-19T02:30:00.000Z",
+          "2018-09-19T03:30:00.000Z",
+          "2018-09-19T04:30:00.000Z",
+          "2018-09-19T05:30:00.000Z",
+          "2018-09-19T06:30:00.000Z"
+        ]
       },
       tooltip: {
         x: {
           format: 'dd/MM/yy HH:mm'
-        },
+        }
       }
     }).render();
+  };
+
+  // Listener para eventos de mudança de rota
+  window.addEventListener("routeChanged", () => {
+    initializeReportsChart();
+  });
+
+  // Chamada inicial para garantir que o gráfico seja renderizado na carga inicial
+  initializeReportsChart();
+
 });

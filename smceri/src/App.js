@@ -12,7 +12,6 @@ import Help from "./pages/Help";
 import Logout from "./components/Logout"; // Or create a separate Logout page if needed
 import './styles/style.scss'; // Import global SCSS
 import './App.css';
-import './scripts/default.js'; // Import JS functionality
 
 const App = () => {
   return (
