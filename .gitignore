@@ -1,0 +1,27 @@
+# Ignorar apenas node_modules dentro de frontend
+/frontend/node_modules/
+
+# Ignorar arquivos gerados pelo sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar arquivos de build
+build/
+dist/
+
+# Ignorar ambientes virtuais (Python, se aplicável)
+.env
+.venv
+
+# Ignorar IDEs e editores
+.idea/
+.vscode/
+
+# Ignorar dependências globais que possam ser instaladas por erro
+node_modules/
