@@ -8,6 +8,8 @@ import * as echarts from 'echarts';
 import Quill from 'quill';
 import tinymce from 'tinymce';
 import $ from 'jquery';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 window.$ = $;
 window.jQuery = $;
@@ -143,17 +145,15 @@ $(() => {
     });
   });
 
-  const navigateTo = (path) => {
-    window.history.pushState({}, '', path);
-    window.dispatchEvent(new Event("routeChanged"));
-};
+  const navigate = useNavigate();  // Usando o hook useNavigate
 
-// Exemplo de uso no Sidebar
-$('.sidebar-nav .nav-link').on('click', function (e) {
+  // Substituir a navegação personalizada para usar o hook useNavigate
+  $('.sidebar-nav .nav-link').on('click', function (e) {
     e.preventDefault();
     const targetPath = $(this).attr('href');
-    navigateTo(targetPath);
-});
+    navigate(targetPath);  // Usando navigate para alterar a URL
+    window.dispatchEvent(new Event("routeChanged"));
+  });
 
   // Echarts resize handler
   const mainContainer = $('#main');
